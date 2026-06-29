@@ -1,5 +1,70 @@
 local actor, super = Class(Actor, "pink")
 
+function actor:x(sprite)
+    if Game.battle then return Game.battle:getPartyBattler("pink").sprite end
+    return sprite
+end
+
+function actor:onSetSprite(sprite, anim, callback)
+    if anim == "battle/hurt" and not self.head then
+        
+        self.body = Sprite("party/pink/battle/hurt")
+        self.body:setOrigin(0.5, 0.25)
+
+        self.body.x = 16
+        self.body.y = 9
+
+
+        self.head = Sprite("party/pink/battle/nohead")
+        self.head:setOrigin(0.5, 0.25)
+
+        self.head.x = 16
+        self.head.y = 9
+
+        Game.stage.timer:tween(0.8, self.head, { rotation = -6.3}, "in-out-quad", function ()
+            self.head.rotation = 0
+        end)
+
+        Game.stage.timer:tween(0.4, self.head, { y = -40 }, "out-quad", function ()
+
+            if self.head then Game.stage.timer:tween(0.4, self.head, { y = 9 }, "in-quad") end
+
+        end)
+
+        local usr = self:x(sprite)
+        usr.alpha = 0
+
+        sprite.parent:addChild(self.body)
+        sprite.parent:addChild(self.head)
+
+    elseif self.head and anim ~= "battle/hurt" then
+        self.head:remove()
+        self.head = nil
+
+        local usr = self:x(sprite)
+        usr.alpha = 1
+
+        self.body:remove()
+        self.body = nil
+    end
+end
+
+function actor:onResetSprite(sprite)
+
+    if self.head then
+
+        local usr = self:x(sprite)
+        usr.alpha = 1
+
+        self.head:remove()
+        self.head = nil
+
+        self.body:remove()
+        self.body = nil
+    end
+
+end
+
 function actor:init()
     super.init(self)
 
@@ -38,26 +103,26 @@ function actor:init()
 
         ["battle/attack"]       = {"battle/attack", 1/15, false},
         ["battle/act"]          = {"battle/act", 1/15, false},
-        ["battle/spell"]        = {"battle/act", 1/15, false},
+        ["battle/spell"]        = {"battle/spell", 1/15, false, next="battle/idle"},
         ["battle/item"]         = {"battle/item", 1/12, false, next="battle/idle"},
         ["battle/spare"]        = {"battle/act", 1/15, false, next="battle/idle"},
 
         ["battle/attack_ready"] = {"battle/attackready", 0.2, true},
         ["battle/act_ready"]    = {"battle/actready", 0.2, true},
-        ["battle/spell_ready"]  = {"battle/actready", 0.2, true},
+        ["battle/spell_ready"]  = {"battle/spellready", 0.2, true},
         ["battle/item_ready"]   = {"battle/itemready", 0.2, true},
         ["battle/defend_ready"] = {"battle/defend", 1/15, false},
 
         ["battle/act_end"]      = {"battle/actend", 1/15, false, next="battle/idle"},
 
-        ["battle/hurt"]         = {"battle/hurt", 1/15, false, temp=true, duration=0.5},
+        ["battle/hurt"]         = {"battle/hurt", 1/15, false, temp=true, duration=1},
         ["battle/defeat"]       = {"battle/defeat", 1/6, false},
         ["battle/swooned"]      = {"battle/defeat", 1/15, false},
         ["battle/succumbed"]    = {"battle/defeat", 1/15, false},
 
-        ["battle/transition"]   = {"sword_jump_down", 0.2, true},
-        ["battle/intro"]        = {"battle/attack", 1/15, false},
-        ["battle/victory"]      = {"battle/victory", 1/10, false},
+        ["battle/transition"]   = {"angle_right", 0.2, true},
+        ["battle/intro"]        = {"angle_right", 1/15, false},
+        ["battle/victory"]      = {"ohoho", 0.2, true},
         ["battle/transition_out"] = {"battle/transition_out", 1/15, false},
 
         -- Cutscene animations
@@ -67,6 +132,8 @@ function actor:init()
         ["dance"]               = {"dance", 1/6, true},
 
         ["pirouette"]           = {"pirouette", 4/30, true},
+
+        ["ohoho"]        = {"ohoho", 0.2, true},
     }
 
     -- Tables of sprites to change into in mirrors
@@ -87,7 +154,12 @@ function actor:init()
 
         ["walk_blush/down"] = {0, 0},
 
+        ["angle_right"] = {0, -1},
+        ["angle_left"] = {0, -1},
+
         ["slide"] = {0, 0},
+
+        ["suprised"] = {-2, -1},
 
         -- Battle offsets
         ["battle/idle"] = {-5, -1},
@@ -97,12 +169,13 @@ function actor:init()
         ["battle/act"] = {-6, -6},
         ["battle/actend"] = {-6, -6},
         ["battle/actready"] = {-6, -6},
-        ["battle/item"] = {-13, -24},
+        ["battle/spellready"] = {-9, -36},
+        ["battle/item"] = {-12, -23},
         ["battle/itemready"] = {-6, -6},
         ["battle/defend"] = {-5, -3},
 
         ["battle/defeat"] = {-8, 12},
-        ["battle/hurt"] = {-5, -6},
+        ["battle/hurt"] = {-3, -1},
 
         ["battle/intro"] = {-8, -9},
         ["battle/victory"] = {-3, 0},
