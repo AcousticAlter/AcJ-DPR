@@ -247,6 +247,27 @@ function notDiamonStore:drawBackground()
     Draw.setColor(1, 1, 1, 1)
 end
 
+function notDiamonStore:drawBonuses(party_member, old_item, bonuses, stat, x, y)
+    local old_stat = 0
+
+    if old_item then
+        old_stat = old_item:getStatBonus(stat) or 0
+    end
+
+    local amount = (bonuses[stat] or 0) - old_stat
+    local amount_string = tostring(amount)
+    if amount < 0 then
+        Draw.setColor(COLORS.aqua)
+    elseif amount == 0 then
+        Draw.setColor(COLORS.white)
+    elseif amount > 0 then
+        Draw.setColor(COLORS.yellow)
+        amount_string = "+" .. amount_string
+    end
+    self:printOutline(amount_string, x, y)
+    Draw.setColor(COLORS.white)
+end
+
 function notDiamonStore:draw()
     self:drawBackground()
 
