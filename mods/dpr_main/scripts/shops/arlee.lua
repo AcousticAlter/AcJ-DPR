@@ -250,7 +250,7 @@ end
 function notDiamonStore:draw()
     self:drawBackground()
 
-    super.draw(self)
+    super.super.draw(self)
 
 	love.graphics.setFont(self.font)
     if self.state == "MAINMENU" then
