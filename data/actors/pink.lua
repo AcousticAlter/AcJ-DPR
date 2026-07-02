@@ -14,6 +14,8 @@ function actor:onSetSprite(sprite, anim, callback)
         self.body.x = 16
         self.body.y = 9
 
+        Assets.playSound("voice/pink/gasp")
+
 
         self.head = Sprite("party/pink/battle/nohead")
         self.head:setOrigin(0.5, 0.25)
@@ -21,7 +23,7 @@ function actor:onSetSprite(sprite, anim, callback)
         self.head.x = 16
         self.head.y = 9
 
-        Game.stage.timer:tween(0.8, self.head, { rotation = -6.3}, "in-out-quad", function ()
+        Game.stage.timer:tween(1, self.head, { rotation = -6.3}, "in-out-quad", function ()
             self.head.rotation = 0
         end)
 
@@ -86,9 +88,9 @@ function actor:init()
     -- Sound to play when this actor speaks (optional)
     self.voice = nil
     -- Path to this actor's portrait for dialogue (optional)
-    self.portrait_path = nil
+    self.portrait_path = "face/pink"
     -- Offset position for this actor's portrait (optional)
-    self.portrait_offset = nil
+    self.portrait_offset = {360 - 18, -97 + 6}
 
     -- Whether this actor as a follower will blush when close to the player
     self.can_blush = false
@@ -101,7 +103,7 @@ function actor:init()
         -- Battle animations
         ["battle/idle"]         = {"battle/idle", 1/6, true},
 
-        ["battle/attack"]       = {"battle/attack", 1/15, false},
+        ["battle/attack"]       = {"battle/attack", 1/7.5, false},
         ["battle/act"]          = {"battle/act", 1/15, false},
         ["battle/spell"]        = {"battle/spell", 1/15, false, next="battle/idle"},
         ["battle/item"]         = {"battle/item", 1/12, false, next="battle/idle"},
@@ -112,6 +114,7 @@ function actor:init()
         ["battle/spell_ready"]  = {"battle/spellready", 0.2, true},
         ["battle/item_ready"]   = {"battle/itemready", 0.2, true},
         ["battle/defend_ready"] = {"battle/defend", 1/15, false},
+        ["battle/flee"]       = {"shock_right", 1/15, false},
 
         ["battle/act_end"]      = {"battle/actend", 1/15, false, next="battle/idle"},
 
@@ -164,8 +167,8 @@ function actor:init()
         -- Battle offsets
         ["battle/idle"] = {-5, -1},
 
-        ["battle/attack"] = {-8, -6},
-        ["battle/attackready"] = {-8, -6},
+        ["battle/attack"] = {-8, -3},
+        ["battle/attackready"] = {-8, -3},
         ["battle/act"] = {-6, -6},
         ["battle/actend"] = {-6, -6},
         ["battle/actready"] = {-6, -6},
@@ -196,7 +199,7 @@ function actor:init()
         ["hug_left"] = {-4, -1},
         ["hug_right"] = {-2, -1},
 
-        ["peace"] = {0, 0},
+        ["peace"] = {-8, -4},
         ["rude_gesture"] = {0, 0},
 
         ["reach"] = {-3, -1},
@@ -212,9 +215,9 @@ function actor:init()
     }
 
     -- Table of sprites to be used as taunts for the Taunt/Parry mechanic.
-    self.taunt_sprites = {"pose", "peace", "t_pose", "sit"}
+    self.taunt_sprites = {"ohoho", "peace"}
 
-    self.menu_anim = "battle/idle"
+    self.menu_anim = "peace"
 end
 
 return actor

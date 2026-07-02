@@ -4,13 +4,13 @@ function character:init()
     super.init(self)
 
     self.name = "Pink"
-
+--Game.battle.tension_bar
     self:setActor("pink")
     self:setDarkTransitionActor("susie_dark_transition") -- Placeholder
 
     self.love = 1
     self.level = self.love
-    self.title = "Magical Girl\nLeads in battle\nusing many ACTs."
+    self.title = "Magical Girl\nFights off evil\nwith anime powers."
 
     self.soul_priority = 2
     self.soul_color = {1, 0.5, 0.5}
@@ -29,6 +29,9 @@ function character:init()
         defense = 0,
         magic = 6
     }
+
+    self.doki = 20
+
     self.max_stats = {}
 
     self.weapon_icon = "ui/menu/equip/staff"
@@ -47,7 +50,7 @@ function character:init()
 	-- highlight color A
     self.highlight_color = ColorUtils.hexToRGB("#FF7F27FF")
 		-- highlight color B
-    self.highlight_color_alt = COLORS.orange
+    self.highlight_color_alt = COLORS.pink
 
     self.icon_color = {252/255, 98/255, 166/255}
 
@@ -92,6 +95,50 @@ function character:onLevelUpLVLib(level)
     end
 end
 
+function character:save()
+    local data = {
+        id = self.id,
+        title = self.title,
+        level = self.level,
+        health = self.health,
+        stats = self.stats,
+        lw_lv = self.lw_lv,
+        lw_exp = self.lw_exp,
+        lw_health = self.lw_health,
+        lw_stats = self.lw_stats,
+        spells = self:saveSpells(),
+        equipped = self:saveEquipment(),
+        flags = self.flags,
+        kills = self.kills,
+        doki = self.doki
+    }
+    self:onSave(data)
+    return data
+end
+
+function character:load(data)
+    self.title = data.title or self.title
+    self.level = data.level or self.level
+    self.stats = data.stats or self.stats
+    self.lw_lv = data.lw_lv or self.lw_lv
+    self.lw_exp = data.lw_exp or self.lw_exp
+    self.lw_stats = data.lw_stats or self.lw_stats
+    if data.spells then
+        self:loadSpells(data.spells)
+    end
+    if data.equipped then
+        self:loadEquipment(data.equipped)
+    end
+    self.flags = data.flags or self.flags
+    self.health = data.health or self:getStat("health", 0, false)
+    self.lw_health = data.lw_health or self:getStat("health", 0, true)
+    self.kills = data.kills or self.kills
+
+    self.doki = data.doki or self.doki
+
+    self:onLoad(data)
+end
+
 function character:drawPowerStat(index, x, y, menu)
     if index == 1 then
         local icon = Assets.getTexture("ui/menu/icon/exclamation")
@@ -102,8 +149,8 @@ function character:drawPowerStat(index, x, y, menu)
     elseif index == 2 then
         local icon = Assets.getTexture("ui/menu/icon/demon")
         Draw.draw(icon, x-26, y+6, 0, 2, 2)
-        love.graphics.print("Karma:", x, y)
-        love.graphics.print("MAX", x+130, y)
+        love.graphics.print("Doki:", x, y)
+        love.graphics.print(self.doki, x+130, y)
         return true
     elseif index == 3 then
         local icon = Assets.getTexture("ui/menu/icon/fire")
