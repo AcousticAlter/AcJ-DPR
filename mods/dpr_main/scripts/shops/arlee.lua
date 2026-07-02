@@ -383,7 +383,7 @@ function notDiamonStore:draw()
                     Draw.setColor(COLORS.white)
 
                     if can_equip then
-                        head_path = Assets.getTexture(party_member:getHeadIcons() .. "/head")
+                        head_path = Assets.getTexture(party_member:getHeadIcons() .. "/head_alpha")
                         if current_item.item.type == "armor" then
                             self:drawTextureOutlined(self.stat_icons["defense_1"], offset_x + 470, offset_y + 127 + top)
                             self:drawTextureOutlined(self.stat_icons["defense_2"], offset_x + 470, offset_y + 147 + top)
@@ -415,7 +415,7 @@ function notDiamonStore:draw()
                             )
                         end
                     else
-                        head_path = Assets.getTexture(party_member:getHeadIcons() .. "/head_error")
+                        head_path = Assets.getTexture(party_member:getHeadIcons() .. "/head_error_alpha")
                     end
 
                     self:drawTextureOutlined(head_path, offset_x + 426, offset_y + 132 + top)
