@@ -1,10 +1,10 @@
-local item, super = Class(HealItem, "ralsei_tea")
+local item, super = Class(HealItem, "calypso_tea")
 
 function item:init()
     super.init(self)
 
     -- Display name
-    self.name = "Ralsei Tea"
+    self.name = "Calypso Tea"
     -- Name displayed when used in battle (optional)
     self.use_name = nil
 
@@ -18,20 +18,15 @@ function item:init()
     -- Shop description
     self.shop = ""
     -- Menu description
-    self.description = "It's own-flavored tea.\nThe flavor just says \"Ralsei.\""
-
+    self.description = "It's own-flavored tea.\nThe flavor just says \"Calypso.\""
     -- Amount healed (HealItem variable)
     self.heal_amount = 50
     -- Amount this item heals for specific characters
+    -- Party member this tea is from
+    local tea_self = "jamm"
+    local placeholder = 50
     self.heal_amounts = {
-        ["kris"] = 60,
-        ["susie"] = 120,
-        ["ralsei"] = 10,
-        ["noelle"] = 50,
-        ["dess"] = 70,
-        ["hero"] = 20,
-        ["ceroba"] = 40,
-        ["jamm"] = 60,
+        ["jamm"] = 200,
         ["calypso"] = 60,
     }
 
@@ -60,23 +55,11 @@ function item:init()
 
     -- Character reactions (key = party member id)
     self.reactions = {
-        kris = {
-            susie = "(No reaction?)",
-            ralsei = "(I'm happy!)"
-        },
-        susie = {
-            susie = "Hey, it's like marshmallows!!",
-            ralsei = "D-don't drink so fast!!"
-        },
-        ralsei = "Um... isn't this water?",
-        noelle = "There's nothing in here!",
-        jamm = "Tastes like... I don't know...",
-        calypso = "Ah, nice, refreshing water.",
-        dess = "tastes like shit",
-        ceroba = {
-            noelle = "I heard it helps to sleep well!",
-            ceroba = "Warm milk."
-        }
+        jamm = {
+			jamm = "...!",
+            calypso = "That's a lot of blushing..."
+		},
+        calypso = "Aye, a nice bottle o' bumbo!",
     }
 end
 
