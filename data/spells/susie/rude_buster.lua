@@ -82,6 +82,9 @@ function spell:getDamage(user, target, damage_bonus)
             damage = damage * 2
         end
     end
+    if (Game.battle and Game.battle.headwind > 0) then
+        damage = math.floor(damage * 1.25)
+    end
     return damage
 end
 
