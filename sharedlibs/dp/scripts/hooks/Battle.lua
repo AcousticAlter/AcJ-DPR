@@ -77,6 +77,8 @@ function Battle:init()
     end
 	
     self.victory = false
+    
+    self.headwind = 0
 end
 
 function Battle:postInit(state, encounter)
@@ -180,6 +182,8 @@ function Battle:nextTurn()
     if self.ally then
         self.ally:onTurnStart()
     end
+    
+    self.headwind = self.headwind - 1
 end
 
 function Battle:update()
