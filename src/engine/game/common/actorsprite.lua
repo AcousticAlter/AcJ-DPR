@@ -78,6 +78,9 @@ function ActorSprite:init(actor)
     self.frozen = false
     self.freeze_progress = 1
 
+    self.darkened = false
+    self.darkened_progress = 1
+
     self.on_footstep = nil
 
     if actor then
@@ -605,6 +608,40 @@ function ActorSprite:draw()
         love.graphics.setBlendMode("alpha")
 
         if self.freeze_progress < 1 then
+            Draw.popScissor()
+        end
+    end
+
+    if self.texture and self.darkened then
+        if self.darkened_progress < 1 then
+            Draw.pushScissor()
+            Draw.scissorPoints(nil, self.texture:getHeight() * (1 - self.darkened_progress), nil, nil)
+        end
+
+        local last_shader = love.graphics.getShader()
+        local shader = Kristal.Shaders["AddColor"]
+        love.graphics.setShader(shader)
+        shader:send("inputcolor", { 0.1, 0.1, 0.2 })
+        shader:send("amount", 1)
+
+        local r, g, b, a = self:getDrawColor()
+
+        Draw.setColor(0, 0, 1, a * 0.8)
+        Draw.draw(self.texture, -1, -1)
+        Draw.setColor(0, 0, 1, a * 0.4)
+        Draw.draw(self.texture, 1, -1)
+        Draw.draw(self.texture, -1, 1)
+        Draw.setColor(0, 0, 1, a * 0.8)
+        Draw.draw(self.texture, 1, 1)
+
+        love.graphics.setShader(last_shader)
+
+        love.graphics.setBlendMode("add")
+        Draw.setColor(0.1, 0.1, 0.2, a * 0.4)
+        Draw.draw(self.texture)
+        love.graphics.setBlendMode("alpha")
+
+        if self.darkened_progress < 1 then
             Draw.popScissor()
         end
     end

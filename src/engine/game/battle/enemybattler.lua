@@ -1017,6 +1017,37 @@ function EnemyBattler:freeze()
     self:defeat("FROZEN", true)
 end
 
+--- Darkens this enemy and defeats them with the reason `"DARKENED"` \
+--- If this enemy can not be darkened, it acts as if it was defeated though violence normally instead
+function EnemyBattler:darkify()
+    if not self.can_darken then
+        self:onDefeat()
+        return
+    end
+
+    Assets.playSound("petrify")
+
+    self:toggleOverlay(true)
+
+    local sprite = self:getActiveSprite()
+    if not sprite:setAnimation("darkened") then
+        sprite:setAnimation("hurt")
+    end
+    sprite:stopShake()
+
+    self:recruitMessage("darkened")
+
+    self.hurt_timer = -1
+
+    sprite.darkened = true
+    sprite.darkened_progress = 0
+
+    Game.battle.timer:tween(20 / 30, sprite, { darkened_progress = 1 })
+
+    Game.battle.money = Game.battle.money + 44
+    self:defeat("DARKENED", true)
+end
+
 --- An override of [`Battler:statusMessage()`](lua://Battler.statusMessage) that positions the message for this EnemyBattler
 ---@param ... unknown
 ---@return DamageNumber
@@ -1056,12 +1087,12 @@ function EnemyBattler:defeat(reason, violent)
     if violent then
         Game.battle.used_violence = true
         if self:isRecruitable() and self:getRecruitStatus() ~= false then
-            if Game:getConfig("enableRecruits") and self.done_state ~= "FROZEN" then
+            if Game:getConfig("enableRecruits") and self.done_state ~= "FROZEN" and self.done_state ~= "DARKENED" then
                 self:recruitMessage("lost")
             end
             self:setRecruitStatus(false)
         end
-        if self.done_state == "KILLED" or self.done_state == "FROZEN" then
+        if self.done_state == "KILLED" or self.done_state == "FROZEN" or self.done_state == "DARKENED"then
             Game.battle.killed = true
             for i, battler in ipairs(Game.battle.party) do
                 battler.chara.kills = battler.chara.kills + 1
@@ -1074,6 +1105,8 @@ function EnemyBattler:defeat(reason, violent)
             end
             if self.done_state == "FROZEN" then
                 Game.battle.freeze_xp = Game.battle.freeze_xp + self.experience
+            elseif self.done_state == "DARKENED" then
+                Game.battle.dark_xp = Game.battle.dark_xp + self.experience
             else
                 Game.battle.xp = Game.battle.xp + self.experience
             end
