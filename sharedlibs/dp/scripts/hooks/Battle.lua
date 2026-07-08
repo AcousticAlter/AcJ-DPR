@@ -5,6 +5,7 @@ function Battle:init()
     super.init(self)
 
     self.freeze_xp = 0
+    self.dark_xp = 0
 
     self.killed = false
 
