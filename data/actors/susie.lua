@@ -93,6 +93,8 @@ function actor:init(style)
         ["laugh_right"] = {"laugh_right", 0.2, true},
         ["away_scratch"] = {"away_scratch", 0.2, true},
 
+        ["kneel_heal_alt_right"] = {"kneel_heal_alt_right", 1/4, false},
+
         -- all animation speeds below are probably incorrect so feel free to fix 'em
         ["look_back_whisper_look"] = {"look_back_whisper_look", 0.2, true},
         ["look_down_arm_shake"] = {"look_down_arm_shake", 1/6, true},

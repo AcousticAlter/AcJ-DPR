@@ -1270,7 +1270,8 @@ function Shop:drawBuyItems(draw_soul)
             love.graphics.print(item.options["name"], text_pos, y)
             if not self.hide_price then
                 Draw.setColor(COLORS.white)
-                love.graphics.print(string.format(self.currency_text, item.options["price"] or 0), 300, y)
+                local price = self:getPrice(item)
+                love.graphics.print(string.format(self.currency_text, price), 300, y)
             end
         end
 
@@ -1436,12 +1437,15 @@ function Shop:drawBuyConfirm()
 
     Draw.setColor(COLORS.white)
 
+    local item = self.items[self.current_selected_item]
+    local price = self:getPrice(item)
+
     local lines = StringUtils.split(
         string.format(
             self.buy_confirmation_text,
             string.format(
                 self.currency_text,
-                self.items[self.current_selected_item].options["price"] or 0
+                price
             )
         ),
         "\n"
@@ -1732,10 +1736,35 @@ function Shop:enterSellMenu(storage)
     end
 end
 
+-- Gets the price to use for the shop item.
+---@param item Item
+function Shop:getPrice(item)
+    local price = item.options["price"] or 0
+
+    -- Handle the broken_bandana quarter price behaivor
+    local hasBrokenBandana, brokenBandanas = Game:checkPartyEquipped("broken_bandana")
+    if hasBrokenBandana then
+        for _ = 1, brokenBandanas do
+            price = price / 1.5 -- Quarter the item price
+        end
+    end
+
+    -- Handle the flurrier_bandana half price behaivor
+    local hasFlurrierBandana, flurrierBandanas = Game:checkPartyEquipped("flurrier_bandana")
+    if hasFlurrierBandana then
+        for _ = 1, flurrierBandanas do
+            price = price / 2 -- Half the item price
+        end
+    end
+
+    return price
+end
+
 --- Checks that the player meets the conditions to purchase an item, and then purchases it.
 ---@param current_item { item: Item, options: table }   The shop entry of the item being purchased.
 function Shop:buyItem(current_item)
-    if (current_item.options["price"] or 0) > self:getMoney() then
+    local price = self:getPrice(current_item)
+    if price > self:getMoney() then
         -- Too expensive!
         self:setRightText(self.buy_too_expensive_text)
     else
@@ -1754,7 +1783,7 @@ function Shop:buyItem(current_item)
             end
 
             -- Remove the money
-            self:removeMoney(current_item.options["price"] or 0)
+            self:removeMoney(price)
 
             -- Play the buy sound
             Assets.playSound("locker")
