@@ -55,7 +55,6 @@ function Soul:init(x, y, color)
     -- Taunt variables end here
 
     -- Diamond shield variables start here
-    self.glow_texture = Assets.getTexture("player/"..Game:getSoulPartyMember():getSoulFacing().."/heart_dodge")
     self.glow_alpha = 0
     self.glow_alpha_increase = 0.1
     -- Diamond shield variables end here
@@ -319,10 +318,10 @@ function Soul:draw()
 
     super.draw(self)
 
-    local glow_w, glow_h = self.glow_texture:getWidth(), self.glow_texture:getHeight()
+    local glow_w, glow_h = self.sprite:getTexture():getWidth(), self.sprite:getTexture():getHeight()
     local scale_x, scale_y = self.sprite.scale_x, self.sprite.scale_y
     love.graphics.setColor(1, 1, 1, self.glow_alpha)
-    love.graphics.draw(self.glow_texture, -glow_w/2 * scale_x, -glow_h/2 * scale_y, 0, scale_x, scale_y)
+    love.graphics.draw(self.sprite:getTexture(), -glow_w/2 * scale_x, -glow_h/2 * scale_y, 0, scale_x, scale_y)
     love.graphics.setColor(1, 1, 1, 1)
 
     self.color = {r,g,b}
