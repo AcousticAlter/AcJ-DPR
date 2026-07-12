@@ -107,8 +107,6 @@ Shaders["Mask"] = love.graphics.newShader[[
  ]]
 
 Shaders["ColorGradient"] = love.graphics.newShader[[
-    #pragma language glsl3
-
     extern vec4 from;
     extern vec4 to;
     extern float screenHeight;
