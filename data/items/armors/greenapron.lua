@@ -41,13 +41,17 @@ function item:init()
     self.bonus_icon = "ui/menu/icon/magic"
 
     -- Equippable characters (default true for armors, false for weapons)
-    self.can_equip = {}
+    self.can_equip = {
+        calypso = false,
+    }
 
     -- Character reactions
     self.reactions = {
         susie = "Arright, back to cooking fire.",
         ralsei = "Horse devors, anyone?",
         noelle = "Kris, can you, um, tie the back for me...?",
+        jamm = "Cooking skills, don't fail me now!",
+        calypso = "Aye, it be not for me...",
     }
 end
 

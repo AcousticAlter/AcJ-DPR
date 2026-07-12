@@ -49,6 +49,8 @@ function item:init()
         susie = "Got a taranchula one?",
         ralsei = "My horns are like antenna!",
         noelle = "They're not ANTENNA!! They're ant-LERS!",
+        jamm = "(Can't show my wings, can't show my wings...)",
+        calypso = "Aye, a perfect fit in me hair.",
     }
     self.susie_rejection = "I'll squash it."
 end

@@ -48,6 +48,8 @@ function item:init()
         susie = "This is annoying.",
         ralsei = "This is annoying.",
         noelle = "Pff... YOU should wear it, Kris.",
+        jamm = "A statue of God.",
+        calypso = "It be just a dog???",
     }
 end
 

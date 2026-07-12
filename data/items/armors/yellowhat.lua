@@ -50,6 +50,11 @@ function item:init()
         susie = "Get in Horse Mode, Ralsei.",
         ralsei = "Can Susie be the horse?",
         noelle = "(At least I'm not the horse)",
+        jamm = {
+            jamm = "Where's this Ralsei guy when you need him?",
+            susie = "That's what I'M saying!",
+        },
+        calypso = "...It suits me.",
     }
 end
 

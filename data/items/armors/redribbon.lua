@@ -49,6 +49,8 @@ function item:init()
         susie = "Kris's got the tab.",
         ralsei = "Red and white...",
         noelle = "Umm, your dad's name is on this.",
+        jamm = "Just glad it isn't for me...",
+        calypso = "...This be nothing to me.",
     }
     self.susie_rejection = "Nah, I guess... not."
 end
