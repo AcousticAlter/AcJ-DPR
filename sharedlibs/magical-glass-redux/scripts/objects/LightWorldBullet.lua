@@ -22,7 +22,7 @@ function LightWorldBullet:getDebugInfo()
 end
 
 function LightWorldBullet:onCollide(soul)
-    if self.hazard_encounter and soul.inv_timer == 0 then
+    if self.hazard_encounter and Game.inv_frames <= 0 then
         soul.inv_timer = self.inv_timer
         Game:encounter(self.hazard_encounter, true, nil, nil, self.light)
     end
