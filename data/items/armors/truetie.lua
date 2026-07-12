@@ -49,6 +49,8 @@ function item:init()
         susie = "More hand-me-downs?",
         ralsei = "Ready for my close-up!",
         noelle = "What's next, a fedora?",
+        jamm = "Oh neat, fancy!",
+        calypso = "...It could be in me hair.",
     }
 
     -- TODO: Elemental resistance

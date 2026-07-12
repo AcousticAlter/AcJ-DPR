@@ -43,7 +43,8 @@ function item:init()
 
     -- Equippable characters (default true for armors, false for weapons)
     self.can_equip = {
-        noelle = false
+        noelle = false,
+        jamm = false,
     }
 
     -- Character reactions
@@ -51,6 +52,8 @@ function item:init()
         susie = "Easier than stealing Ralsei's.",
         ralsei = "I'm ready to do your homework!",
         noelle = "That's too much like...",
+        jamm = "...I got some of my own.",
+        calypso = "Aye, they be helpful...",
     }
 end
 

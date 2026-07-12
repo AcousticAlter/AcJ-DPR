@@ -48,6 +48,8 @@ function item:init()
         susie = "Cool. Visible ears.",
         ralsei = "Fits my horns perfectly!",
         noelle = "Does not. Fit my antlers.",
+        jamm = "I won't even question this...",
+        calypso = "Yer interests confuse me...",
     }
 end
 
