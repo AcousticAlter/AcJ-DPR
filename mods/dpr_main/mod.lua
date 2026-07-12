@@ -60,6 +60,46 @@ function Mod:postInit(new_file)
             item2 = "tensionbit"
         },
         {
+            result = "twistedswd",
+            item1 = "thornring",
+            item2 = "purecrystal"
+        },
+        {
+            result = "monarchrbn",
+            item1 = "scarfmark",
+            item2 = "princessrbn"
+        },
+        {
+            result = "truetie",
+            item1 = "tennatie",
+            item2 = "frayedbowtie"
+        },
+        {
+            result = "tvdinner",
+            item1 = "tvslop",
+            item2 = "tvslop"
+        },
+        {
+            result = "deluxedinner",
+            item1 = "tvdinner",
+            item2 = "tvdinner"
+        },
+        {
+            result = "punchbowl",
+            item1 = "scarlixir",
+            item2 = "powerband"
+        },
+        {
+            result = "tensionmax",
+            item1 = "scarlixir",
+            item2 = "mysticband"
+        },
+        {
+            result = "dogwidow",
+            item1 = "goldwidow",
+            item2 = "dogdollar"
+        },
+        {
             result = "tensiontie",
             item1 = "tennatie",
             item2 = "tentaser"
