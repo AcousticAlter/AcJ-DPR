@@ -460,7 +460,7 @@ function World:onKeyPressed(key)
         end
         if key == "k" then
             Game:setTension(Game:getMaxTension())
-            Assets.playSound("cardrive")
+            Assets.playSound("cardrive", 0.8, 1.4)
         end
         if key == "n" then
             NOCLIP = not NOCLIP
@@ -1347,6 +1347,14 @@ function World:shouldBulletsHurt()
     end
 
     return self:inBattle()
+end
+
+--- Whether the world should decrease the invulnerability timer.
+---
+--- By default, this redirects to [`Player:shouldDecreaseInvuln()`](lua://Player.shouldDecreaseInvuln) if the player exists.
+---@return boolean? decrease_invuln # `true` if the invulnerability timer should decrease.
+function World:shouldDecreaseInvuln()
+    return self.player ~= nil and self.player:shouldDecreaseInvuln()
 end
 
 function World:shouldCharacterCollide(char)

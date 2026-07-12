@@ -45,8 +45,16 @@ function character:init()
 
     -- Spells
     self:addSpell("rude_buster")
-    self:addSpell("sick_heal")
-    self:addSpell("pacibuster")
+    if Game.chapter == 2 then
+        self:addSpell("ultimate_heal")
+    elseif Game.chapter == 3 then
+        self:addSpell("ultra_heal")
+    elseif Game.chapter == 4 then
+        self:addSpell("ok_heal")
+    elseif Game.chapter >= 5 then
+        self:addSpell("ok_heal")
+        self:addSpell("scythemare")
+    end
 
     -- Current health (saved to the save file)
     if Game.chapter == 1 then
@@ -207,6 +215,7 @@ function character:init()
     -- Character flags (saved to the save file)
     self.flags = {
         ["auto_attack"] = false,
+        ["can_wear_ribbons"] = false,
         ["serious"] = false,
         ["eyes"] = true,
         ["kindness_heal"] = false,
@@ -323,17 +332,19 @@ function character:drawPowerStat(index, x, y, menu)
         end
         return true
     elseif index == 2 then
-        if Game.chapter >= 3 then
-            return
+        if Game.chapter < 3 then
+            local icon = Assets.getTexture("ui/menu/icon/demon")
+            Draw.draw(icon, x-26, y+6, 0, 2, 2)
         end
-        local icon = Assets.getTexture("ui/menu/icon/demon")
-        Draw.draw(icon, x-26, y+6, 0, 2, 2)
         if Game.chapter == 1 then
             love.graphics.print("Crudeness", x, y, 0, 0.8, 1)
             love.graphics.print("100", x+130, y)
         elseif Game.chapter == 2 then
             love.graphics.print("Purple", x, y, 0, 0.8, 1)
             love.graphics.print("Yes", x+130, y)
+        elseif Game.chapter >= 4 then
+            love.graphics.print("* Healing", x-24, y)
+            love.graphics.print(15 + (self:getFlag("healing_used", 0)), x+130, y)
         end
         return true
     elseif index == 3 then
