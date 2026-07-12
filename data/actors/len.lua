@@ -28,12 +28,12 @@ function actor:init()
     -- Sound to play when this actor speaks (optional)
     self.voice = nil
     -- Path to this actor's portrait for dialogue (optional)
-    self.portrait_path = nil
+    self.portrait_path = "face/len"
     -- Offset position for this actor's portrait (optional)
     self.portrait_offset = nil
 
     -- Whether this actor as a follower will blush when close to the player
-    self.can_blush = false
+    self.can_blush = true
 
     -- Table of sprite animations
     self.animations = {
@@ -49,6 +49,8 @@ function actor:init()
         ["battle/item"]         = {"battle/item", 1/12, false, next="battle/idle"},
         ["battle/spare"]        = {"battle/act", 1/15, false, next="battle/idle"},
 
+        ["battle/pirouette"]    = {"battle/pirouette", 4/30, true},
+
         ["battle/attack_ready"] = {"battle/attackready", 0.2, true},
         ["battle/act_ready"]    = {"battle/actready", 0.2, true},
         ["battle/spell_ready"]  = {"battle/actready", 0.2, true},
@@ -62,19 +64,17 @@ function actor:init()
         ["battle/swooned"]      = {"battle/defeat", 1/15, false},
 
         ["battle/transition"]   = {"sword_jump_down", 0.2, true},
-        ["battle/intro"]        = {"battle/attack", 1/15, false},
+        ["battle/intro"]        = {"battle/intro", 1/15, false},
         ["battle/victory"]      = {"battle/victory", 1/10, false},
 
         -- Cutscene animations
         ["jump_fall"]           = {"fall", 1/5, true},
         ["jump_ball"]           = {"ball", 1/15, true},
-
+        
         ["pirouette"]           = {"pirouette", 4/30, true},
+        ["scream/right"]        = {"scream/right", 1/8, false},
+        ["reach"]               = {"reach", 0.1, true},
     }
-
-    if Game.chapter == 1 then
-        self.animations["battle/transition"] = {"walk/right", 0, true}
-    end
 
     -- Tables of sprites to change into in mirrors
     self.mirror_sprites = {
@@ -150,12 +150,19 @@ function actor:init()
     -- Table of sprites to be used as taunts for the Taunt/Parry mechanic.
     self.taunt_sprites = {"pose", "peace", "t_pose", "sit"}
 
-    self.menu_anim = "pose"
+    self.menu_anim = "peace"
+    
+    self:addExpressionPart("head", "face/len", 0, 0, {layer = 2, default = "head"})
+    self:addExpressionPart("face", "face/len/face", 0, 0, {layer = 3, default = "neutral", side_b = {-1, 0}})
+    self:addExpressionPart("mouth", "face/len/mouth", 0, 0, {layer = 4, default = "neutral"})
 end
 
 function actor:onSpriteInit(sprite)
-    sprite:setScaleOrigin(0.5,1)
-    sprite:setScale(1.4,1.3)
+    sprite:setScaleOrigin(0.5, 1)
+
+    if not Game:getFlag("honestLen") then
+        sprite:setScale(1.4, 1.4)
+    end
 end
 
 return actor

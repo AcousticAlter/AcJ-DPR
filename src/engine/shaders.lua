@@ -55,18 +55,18 @@ Shaders["AngleGradient"] = love.graphics.newShader([[
     extern float amount;
     extern float angle;
     extern vec4 bounds;
-    
+
     vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
     {
         vec2 origin = vec2(0.5, 0.5);
-        
+
         vec2 uv = (texture_coords - bounds.xy) / bounds.zw - origin;
-        
+
         float gradAngle = -angle + atan(uv.y, uv.x);
-        
+
         float len = length(uv);
         uv = vec2(cos(gradAngle) * len, sin(gradAngle) * len) + origin;
-        
+
         vec4 tex_color = Texel(tex, texture_coords);
         vec4 grad_color = mix(from, to, smoothstep(0.0, 1.0, uv.x)) * tex_color.a;
         return mix(tex_color, grad_color, amount);
@@ -106,7 +106,7 @@ Shaders["Mask"] = love.graphics.newShader[[
     }
  ]]
 
-Shaders["ColorGradient"] = love.graphics.newShader[[
+local success, colorShader = pcall(love.graphics.newShader, [[
     #pragma language glsl3
 
     extern vec4 from;
@@ -119,6 +119,12 @@ Shaders["ColorGradient"] = love.graphics.newShader[[
 
         return mix(from, to, y)*Texel(tex, texture_coords).a;
     }
-]]
+]])
+
+if success then
+    Shaders["ColorGradient"] = colorShader
+else
+    print("Color shader not supported on system.")
+end
 
 return Shaders
