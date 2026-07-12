@@ -39,7 +39,9 @@ function item:init()
     self.reactions = {
         susie = "I... I smashed it...",
         ralsei = "I'll... be good!",
-        noelle = "Doesn't bread always taste like this?"
+        noelle = "Doesn't bread always taste like this?",
+        jamm = "(Is that the Xbox logo???)",
+        calypso = "Aye, it ain't stale...",
     }
 end
 

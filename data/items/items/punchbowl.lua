@@ -39,7 +39,9 @@ function item:init()
     self.reactions = {
         susie = "Ow. It's \"punch\", dumbass.",
         ralsei = "It's got a \"kick\" to it!",
-        noelle = "Not mixing it with yellow?"
+        noelle = "Not mixing it with yellow?",
+        jamm = "Wow, quite the potion.",
+        calypso = "...That be confusing.",
     }
 end
 

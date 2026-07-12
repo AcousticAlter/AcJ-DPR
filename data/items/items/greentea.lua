@@ -39,7 +39,9 @@ function item:init()
     self.reactions = {
         susie = "Man, Green did awesome.",
         ralsei = "Wow, Green did wonderfully!",
-        noelle = "You mean cardamom?"
+        noelle = "You mean cardamom?",
+        jamm = "Huh, that's really good.",
+        calypso = "It be so calming...",
     }
 end
 

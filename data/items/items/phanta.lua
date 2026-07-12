@@ -45,7 +45,9 @@ function item:init()
     self.reactions = {
         susie = "Bought. With money. Hell yeah.",
         ralsei = "But, it's Susie's favorite...",
-        noelle = "Look, Kris! Susie's venom! (drinks it) (drinks it)"
+        noelle = "Look, Kris! Susie's venom! (drinks it) (drinks it)",
+        jamm = "Grape's awesome.",
+        calypso = "It be what I'm used to.",
     }
 end
 

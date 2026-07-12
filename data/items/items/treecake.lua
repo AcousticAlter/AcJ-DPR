@@ -40,7 +40,9 @@ function item:init()
         -- Susie with flag 1514 set: "Mmm, Ralsei's cake."
         susie = "Mmm, dark candy.",
         ralsei = "Mmm, cotton candy.",
-        noelle = "Mmm, water bubbler. I mean, fruitcake."
+        noelle = "Mmm, water bubbler. I mean, fruitcake.",
+        jamm = "Mmm, cake.",
+        calypso = "Aye, me first rum...",
     }
 end
 
