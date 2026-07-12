@@ -50,6 +50,8 @@ function item:init()
         susie = "No, you geek.",
         ralsei = "Cool poses, Kris!",
         noelle = "Go, Kris! \"1000 Moon Crescent Slash!\" Faha!",
+        jamm = "Is it at least a different type of wood?",
+        calypso = "A practive blade be a practice blade...",
     }
 end
 

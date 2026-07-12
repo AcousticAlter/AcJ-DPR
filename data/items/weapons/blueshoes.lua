@@ -51,7 +51,9 @@ function item:init()
     self.reactions = {
         susie = "Hell no, I'd wreck these.",
         ralsei = "Helps me step to attack!",
-        noelle = "(You KNOW I can't wear normal shoes...)"
+        noelle = "(You KNOW I can't wear normal shoes...)",
+        jamm = "...So anything's a weapon now?",
+        calypso = "I don't tie me shoes...",
     }
 end
 

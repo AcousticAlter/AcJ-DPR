@@ -50,6 +50,11 @@ function item:init()
         susie = "Literally wicked.",
         ralsei = "Yay, I'm infected!",
         noelle = "Well... roses have thorns, too.",
+        jamm = {
+            jamm = "East or West?",
+            calypso = "(What???)",
+        },
+        calypso = "It be too green...",
     }
 end
 
