@@ -39,7 +39,9 @@ function item:init()
     self.reactions = {
         susie = "Why don't we eat bullets more?",
         ralsei = "Mmm, friendly pellets.",
-        noelle = "(Stop pretending it's an attack...)"
+        noelle = "(Stop pretending it's an attack...)",
+        jamm = "Candy bullets... Interesting.",
+        calypso = "At least I ain't firin' them.",
     }
 end
 

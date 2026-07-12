@@ -45,7 +45,9 @@ function item:init()
     self.reactions = {
         susie = "Can't get the marble.",
         ralsei = "How do I recycle this?",
-        noelle = "(Are they, pronouncing it wrong on purpose?)"
+        noelle = "(Are they, pronouncing it wrong on purpose?)",
+        jamm = "Reminds me of the sky.",
+        calypso = "Aye, brings back memories...",
     }
 end
 

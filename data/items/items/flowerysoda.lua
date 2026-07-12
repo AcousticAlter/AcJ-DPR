@@ -45,7 +45,9 @@ function item:init()
     self.reactions = {
         susie = "Eww, Ralsei likes lactose?",
         ralsei = "I... I'm not thirsty.",
-        noelle = "........ who the heck is Flowery?"
+        noelle = "........ who the heck is Flowery?",
+        jamm = "...Carbonated milk???",
+        calypso = "It be alright...",
     }
 end
 

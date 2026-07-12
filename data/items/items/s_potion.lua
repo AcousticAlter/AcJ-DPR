@@ -39,7 +39,9 @@ function item:init()
     self.reactions = {
         susie = "Still kinda burns.",
         ralsei = "Um, is it caffeinated?",
-        noelle = "This... is expired!"
+        noelle = "This... is expired!",
+        jamm = "Kinda spicy...",
+        calypso = "Aye, it be no poison...",
     }
 end
 

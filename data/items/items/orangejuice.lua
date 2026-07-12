@@ -39,7 +39,12 @@ function item:init()
     self.reactions = {
         susie = "Dude, this isn't orange.",
         ralsei = "The name and color don't match.",
-        noelle = "You mean CITRUS? CITRUS, right? CITRUS?"
+        noelle = "You mean CITRUS? CITRUS, right? CITRUS?",
+        jamm = "...\"Orange\" juice. Got it.",
+        calypso = {
+            calypso = "Aye, no Vitamin C...",
+            jamm = "...Scurvy?",
+        },
     }
 end
 

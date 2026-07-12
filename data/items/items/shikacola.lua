@@ -43,7 +43,9 @@ function item:init()
     self.reactions = {
         susie = "Noelle... should try this.",
         ralsei = "Let's save some for her?",
-        noelle = "WHY WOULD I LIKE THIS??? IT HAS SOMEONE'S HAIR IN IT???"
+        noelle = "WHY WOULD I LIKE THIS??? IT HAS SOMEONE'S HAIR IN IT???",
+        jamm = "...Why is there hair in it.",
+        calypso = "Aye, too cheerful...",
     }
 end
 
