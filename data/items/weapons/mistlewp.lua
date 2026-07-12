@@ -50,7 +50,12 @@ function item:init()
     self.reactions = {
         susie = "Stop nailing it to stuff.",
         ralsei = "Look, I'm a wreath?",
-        noelle = "... ah?"
+        noelle = "... ah?",
+        jamm = {
+            jamm = "Ivy's hard to wash off my gloves.",
+            calypso = "Be real. Ye don't wash 'em.",
+        },
+        calypso = "This be hard to control...",
     }
 end
 

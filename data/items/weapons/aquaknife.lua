@@ -50,7 +50,9 @@ function item:init()
     self.reactions = {
         susie = "Too small. Kris-size.",
         ralsei = "Umm, I might hurt myself...",
-        noelle = "That's, um, nostalgic."
+        noelle = "That's, um, nostalgic.",
+        jamm = "Knives aren't my thing.",
+        calypso = "I've seen better.",
     }
 end
 

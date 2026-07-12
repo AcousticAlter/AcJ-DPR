@@ -49,7 +49,9 @@ function item:init()
     self.reactions = {
         susie = "Nah, that's for Ralsei.",
         ralsei = "I, um... it, it doesn't fit!",
-        noelle = "Who the heck is Flowery?"
+        noelle = "Who the heck is Flowery?",
+        jamm = "...I'm not that cheap.",
+        calypso = "I don't like a guy I don't even know!",
     }
 end
 

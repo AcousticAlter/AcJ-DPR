@@ -51,7 +51,9 @@ function item:init()
     self.reactions = {
         susie = "...",
         ralsei = "... I'll wear it.",
-        noelle = "Who the HECK is Flowery?"
+        noelle = "Who the HECK is Flowery?",
+        jamm = "How can someone use this...?",
+        calypso = "It won't even keep me warm!",
     }
 end
 

@@ -50,7 +50,9 @@ function item:init()
     self.reactions = {
         susie = "Damn, if only it fit!",
         ralsei = "Noelle... could equip this.",
-        noelle = "Wow! Something I actually want to wear?"
+        noelle = "Wow! Something I actually want to wear?",
+        jamm = "Like the ThornScarf, but a ring?",      -- the ThornScarf is an unused Deoxynn item
+        calypso = "...No.",
     }
 end
 
