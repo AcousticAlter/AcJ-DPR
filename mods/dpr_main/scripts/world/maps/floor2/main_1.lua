@@ -19,8 +19,8 @@ return {
     {
       name = "floor2",
       firstgid = 1,
-      filename = "../../../tilesets/floor2.tsx",
-      exportfilename = "../../../tilesets/floor2.lua"
+      filename = "../../tilesets/floor2.tsx",
+      exportfilename = "../../tilesets/floor2.lua"
     }
   },
   layers = {
