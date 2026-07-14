@@ -7,7 +7,7 @@ function spell:init()
 	self.cast_name = "FLOWER BARRAGE"
 
     self.effect = "Flower\nCircle"
-    self.description = "Summons a circle of flowers around the enemy,\nwhich fly towards them, making an explosion." -- uhh can't find the proper words to finish it
+    self.description = "Summons a circle of flowers around the enemy,\nwhich fly towards them, making an explosion."
 	self.check = {"Summons a circle of flowers around the enemy, which fly towards them.", "* And then make an explosion."}
 
     self.cost = 40
@@ -34,7 +34,7 @@ function spell:onCast(user, target)
         boom:setOrigin(0.5)
         boom:setScale(1)
         boom.layer = BATTLE_LAYERS["above_battlers"] + 1
-        boom:play(1/12, false, function() end)
+        boom:play(1/12, false, function() boom:remove() end)
         Game.battle:addChild(boom)
     end
 
@@ -81,7 +81,7 @@ function spell:onLightCast(user, target)
         boom:setOrigin(0.5)
         boom:setScale(2)
         boom.layer = LIGHT_BATTLE_LAYERS["above_arena_border"] + 1
-        boom:play(1/12, false, function() end)
+        boom:play(1/12, false, function() boom:remove() end)
         Game.battle:addChild(boom)
     end
 
