@@ -839,56 +839,12 @@ function Mod:makeSpellsMissAgainstJackenstein()
         return false
     end)
     local spell = Registry.getSpell("supersling")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local damage = math.floor((user.chara:getStat("attack") * 15))
-
-        local function generateSlash(scale_x, miss)
-            local cutAnim = Sprite("effects/attack/sling")
-            Assets.playSound("scytheburst")
-            Assets.playSound("criticalswing", 1.2, 1.3)
-            user.overlay_sprite:setAnimation("battle/attack") -- Makes the afterimages use the first frame of the attack animation
-            user:toggleOverlay(true)
-            local afterimage1 = AfterImage(user, 0.5)
-            local afterimage2 = AfterImage(user, 0.6)
-            user:toggleOverlay(false)
-            afterimage1.physics.speed_x = 2.5
-            afterimage2.physics.speed_x = 5
-            afterimage2:setLayer(afterimage1.layer - 1)
-            user:setAnimation("battle/attack", function()
-                user:setAnimation("battle/idle")
-            end)
-            user:flash()
-            cutAnim:setOrigin(0.5, 0.5)
-            cutAnim:setScale(2.5 * scale_x, 2.5)
-            if miss then
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2-60))
-            else
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-            end
-            cutAnim.layer = target.layer + 0.01
-            cutAnim:play(1/15, false, function(s) s:remove() end)
-            user.parent:addChild(cutAnim)
-            user.parent:addChild(afterimage1)
-            user.parent:addChild(afterimage2)
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
+        if Game.battle.encounter.is_jackenstein then
+            return 0
+        else
+            return orig(self, user, target)
         end
-
-        Game.battle.timer:after(0.1/2, function()
-            if Game.battle.encounter.is_jackenstein then
-                generateSlash(1, true)
-                target:hurt(0, user)
-            else
-                generateSlash(1, false)
-                local mult = 1
-                if target.health == target.max_health then
-                    mult = 0.5
-                end
-                target:heal(damage)
-                if target:canService(self.id) then
-                    target:addMercy(math.ceil(target.service_mercy*1.3*mult))
-                end
-                target:onService(self.id)
-            end
-        end)
     end)
     local spell = Registry.getSpell("jackpot_jab")
     HookSystem.hook(spell, "onCast", function (orig, self, user, target)
@@ -1330,172 +1286,27 @@ function Mod:makeSpellsMissAgainstJackenstein()
         Game.battle:incTemp(15)
     end)
     local spell = Registry.getSpell("electric_havoc")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local damage = 200
-        
-        if target.defense >= 99 then
-            damage = 0
-        end
-
-        local function shock(scale_x, miss)
-            local cutAnim = Sprite("party/jamm/dark/special/shock")
-            cutAnim:setOrigin(0.5, 1)
-            cutAnim:setScale(2 * scale_x, 2)
-            if miss then
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2-60))
-            else
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-            end
-            cutAnim.layer = target.layer + 0.01
-            user.parent:addChild(cutAnim)
-            Assets.playSound("shock", 1, 1)
-            Game.stage.timer:tween(0.5, cutAnim, {alpha = 0}, "linear", function()
-                cutAnim:remove()
-            end)
-        end
-
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
         if Game.battle.encounter.is_jackenstein then
-            Game.battle.timer:after(0.25, function()
-                shock(1, true)
-                target:hurt(0, user)
-                Game.battle.timer:after(0.25, function()
-                    shock(-1, true)
-                    target:hurt(0, user)
-                    Game.battle.timer:after(0.25, function()
-                        shock(1, true)
-                        target:hurt(0, user)
-                    end)
-                end)
-            end)
+            return 0
         else
-            Game.battle.timer:after(0.25, function()
-            shock(1, false)
-                target:hurt(damage, user)
-                Game.battle.timer:after(0.25, function()
-                    shock(-1, false)
-                    target:hurt(damage, user)
-                    Game.battle.timer:after(0.25, function()
-                        shock(1, false)
-                        target:hurt(damage, user)
-                    end)
-                end)
-            end)
+            return orig(self, user, target)
         end
     end)
     local spell = Registry.getSpell("darksling")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local damage = math.floor((((user.chara:getStat("attack") * 400) / 20) - 3 * (target.defense)) * 1.3)
-        if target.boss then
-            damage = math.floor((((user.chara:getStat("attack") * 130) / 20) - 3 * (target.defense)) * 1.7)
-        end
-
-        local function generateSlash(scale_x, miss)
-            local cutAnim = Sprite("effects/attack/sling")
-            Assets.playSound("scytheburst")
-            Assets.playSound("criticalswing", 1.2, 1.3)
-            user.overlay_sprite:setAnimation("battle/attack") -- Makes the afterimages use the first frame of the attack animation
-            user:toggleOverlay(true)
-            local afterimage1 = AfterImage(user, 0.5)
-            local afterimage2 = AfterImage(user, 0.6)
-            user:toggleOverlay(false)
-            afterimage1.physics.speed_x = 2.5
-            afterimage2.physics.speed_x = 5
-            afterimage2:setLayer(afterimage1.layer - 1)
-            user:setAnimation("battle/attack", function()
-                user:setAnimation("battle/idle")
-            end)
-            user:flash()
-            cutAnim:setOrigin(0.5, 0.5)
-            cutAnim:setScale(2.5 * scale_x, 2.5)
-            if miss then
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2-60))
-            else
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-            end
-            cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-            cutAnim.layer = target.layer + 0.01
-            cutAnim:play(1/15, false, function(s) s:remove() end)
-            user.parent:addChild(cutAnim)
-            user.parent:addChild(afterimage1)
-            user.parent:addChild(afterimage2)
-        end
-
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
         if Game.battle.encounter.is_jackenstein then
-            generateSlash(1,true)
-            target:hurt(0, user)
+            return 0
         else
-            generateSlash(1,false)
-            target:hurt(damage, user)
+            return orig(self, user, target)
         end
     end)
-    local spell = Registry.getSpell("numbshot") -- Don't know why this was Darkshot before
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local damage = math.floor((((user.chara:getStat("attack") * 4)) - 3 * target.defense))
-
-        local function generateSlash(scale_x, miss)
-            local cutAnim = Sprite("effects/attack/sling")
-            Assets.playSound("scytheburst")
-            Assets.playSound("criticalswing", 1.2, 1.3)
-            user.overlay_sprite:setAnimation("battle/attack") -- Makes the afterimages use the first frame of the attack animation
-            user:toggleOverlay(true)
-            local afterimage1 = AfterImage(user, 0.5)
-            local afterimage2 = AfterImage(user, 0.6)
-            user:toggleOverlay(false)
-            afterimage1.physics.speed_x = 2.5
-            afterimage2.physics.speed_x = 5
-            afterimage2:setLayer(afterimage1.layer - 1)
-            user:setAnimation("battle/attack", function()
-                user:setAnimation("battle/idle")
-            end)
-            user:flash()
-            cutAnim:setOrigin(0.5, 0.5)
-            cutAnim:setScale(2.5 * scale_x, 2.5)
-            if miss then
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2-60))
-            else
-                cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-            end
-            cutAnim.layer = target.layer + 0.01
-            cutAnim:play(1/15, false, function(s) s:remove() end)
-            user.parent:addChild(cutAnim)
-            user.parent:addChild(afterimage1)
-            user.parent:addChild(afterimage2)
-        end
-
+    local spell = Registry.getSpell("numbshot")
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
         if Game.battle.encounter.is_jackenstein then
-            generateSlash(1,true)
-            target:hurt(0, user)
+            return 0
         else
-            generateSlash(1,false)
-            target:hurt(damage, user)
-            if target.health > 0 then
-                if target.tired then
-                    Assets.playSound("spell_pacify")
-
-                    target:spare(true)
-
-                    local pacify_x, pacify_y = target:getRelativePos(target.width/2, target.height/2)
-                    local z_count = 0
-                    local z_parent = target.parent
-                    Game.battle.timer:every(1/15, function()
-                        z_count = z_count + 1
-                        local z = SpareZ(z_count * -40, pacify_x, pacify_y)
-                        z.layer = target.layer + 0.002
-                        z_parent:addChild(z)
-                    end, 8)
-                else
-                    local recolor = target:addFX(RecolorFX())
-                    Game.battle.timer:during(8/30, function()
-                        recolor.color = ColorUtils.mergeColor(recolor.color, {0, 0, 1}, 0.12 * DTMULT)
-                    end, function()
-                        Game.battle.timer:during(8/30, function()
-                            recolor.color = ColorUtils.mergeColor(recolor.color, {1, 1, 1}, 0.16 * DTMULT)
-                        end, function()
-                            target:removeFX(recolor)
-                        end)
-                    end)
-                end
-            end
+            return orig(self, user, target)
         end
     end)
     local spell = Registry.getSpell("chainslash")
