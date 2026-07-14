@@ -86,7 +86,7 @@ function spell:getDamage(user, target)
         local attack_part = (user.chara:getStat("attack") * 100) / 5
         local damage = math.ceil(attack_part + attack_part * (0.2 * yellowhat_count) - (target.defense * 3))
 
-        local weapon = battler.chara:getWeapon()
+        local weapon = user.chara:getWeapon()
         if weapon and weapon.id == "berserkeraxe" then -- taken from normal attack code
             damage = damage * 2
         end
