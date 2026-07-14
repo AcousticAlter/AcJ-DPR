@@ -544,93 +544,20 @@ end
 function Mod:makeSpellsMissAgainstJackenstein()
     -- Jackenstein spell changes to make them miss
     local spell = Registry.getSpell("rude_buster")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local buster_finished = false
-        local anim_finished = false
-        local function finishAnim()
-            anim_finished = true
-            if buster_finished then
-                Game.battle:finishAction()
-            end
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target, damage_bonus)
+        if Game.battle.encounter.is_jackenstein then
+            return 0
+        else
+            return orig(self, user, target, damage_bonus)
         end
-        if not user:setAnimation("battle/rude_buster", finishAnim) then
-            anim_finished = false
-            user:setAnimation("battle/attack", finishAnim)
-        end
-        Game.battle.timer:after(15/30, function()
-            Assets.playSound("rudebuster_swing")
-            local x, y = user:getRelativePos(user.width, user.height/2 - 10, Game.battle)
-            local tx, ty = target:getRelativePos(target.width/2, target.height/2, Game.battle)
-            local blast = RudeBusterBeam(false, x, y, tx, ty, function(damage_bonus, play_sound, miss)
-                if miss then                    
-                    target:hurt(0, user)
-                    buster_finished = true
-                    if anim_finished then
-                        Game.battle:finishAction()
-                    end
-                else
-                    local damage = self:getDamage(user, target, damage_bonus)
-                    if play_sound then
-                        Assets.playSound("scytheburst")
-                    end
-                    target:flash()
-                    target:hurt(damage, user)
-                    buster_finished = true
-                    if anim_finished then
-                        Game.battle:finishAction()
-                    end
-                end
-            end)
-            blast.layer = BATTLE_LAYERS["above_ui"]
-            Game.battle:addChild(blast)
-        end)
-        return false
     end)
     local spell = Registry.getSpell("red_buster")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target) 
-        Game.battle:incTemp(30)
-        
-        local buster_finished = false
-        local anim_finished = false
-        local function finishAnim()
-            anim_finished = true
-            if buster_finished then
-                Game.battle:finishAction()
-            end
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target, damage_bonus)
+        if Game.battle.encounter.is_jackenstein then
+            return 0
+        else
+            return orig(self, user, target, damage_bonus)
         end
-        if not user:setAnimation("battle/rude_buster", finishAnim) then
-            anim_finished = false
-            user:setAnimation("battle/attack", finishAnim)
-        end
-        Game.battle.timer:after(15/30, function()
-            Assets.playSound("rudebuster_swing")
-            local x, y = user:getRelativePos(user.width, user.height/2 - 10, Game.battle)
-            local tx, ty = target:getRelativePos(target.width/2, target.height/2, Game.battle)
-            local blast = RudeBusterBeam(true, x, y, tx, ty, function(damage_bonus, play_sound, miss)
-                if miss then                    
-                    target:hurt(0, user)
-                    buster_finished = true
-                    if anim_finished then
-                        Game.battle:finishAction()
-                    end
-                else
-                    local damage = self:getDamage(user, target, damage_bonus)
-                    if play_sound then
-                        Assets.playSound("scytheburst")
-                    end
-                    local flash = target:flash()
-                    flash.color_mask:setColor(1, 0, 0)
-                    target:hurt(damage, user)
-                    buster_finished = true
-                    if anim_finished then
-                        Game.battle:finishAction()
-                    end
-                end
-            end)
-            blast.layer = BATTLE_LAYERS["above_ui"]
-            Game.battle:addChild(blast)
-        end)
-        return false
     end)
     local spell = Registry.getSpell("ice_beam")
     HookSystem.hook(spell, "onCast", function (orig, self, user, target)
@@ -1249,29 +1176,12 @@ function Mod:makeSpellsMissAgainstJackenstein()
         return false
     end)
     local spell = Registry.getSpell("rage")
-    HookSystem.hook(spell, "onCast", function (orig, self, user, target)
-        local targer = Game.battle:getActiveEnemies()[love.math.random(#Game.battle:getActiveEnemies())]
-        user.chara.rage = true
-        user.chara.rage_counter = 6
-        user:setAnimation("battle/attack")
-        Assets.playSound("scytheburst")
-        Assets.playSound("criticalswing", 1.2, 1.3)
-        
-        Game.battle.timer:after(15/30, function()
-            local damage = math.ceil(((user.chara:getStat("attack") * 100) / 5) - (targer.defense * 3))
-            
-            if Game.battle.encounter.is_jackenstein then
-                targer:hurt(0, user)
-            else
-                targer:hurt(damage, user)
-                Assets.playSound("damage")
-            end
-            user:setAnimation("battle/idle")
-            Game.battle.timer:after(15/30, function()
-                Game.battle:finishAction()
-            end)
-        end)
-        return false
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
+        if Game.battle.encounter.is_jackenstein then
+            return 0
+        else
+            return orig(self, user, target)
+        end
     end)
     local spell = Registry.getSpell("fireball")
     HookSystem.hook(spell, "onCast", function (orig, self, user, target)
@@ -1350,6 +1260,14 @@ function Mod:makeSpellsMissAgainstJackenstein()
             end
         end
         return false
+    end)
+    local spell = Registry.getSpell("pacibuster")
+    HookSystem.hook(spell, "getDamage", function (orig, self, user, target, damage_bonus)
+        if Game.battle.encounter.is_jackenstein then
+            return 0
+        else
+            return orig(self, user, target, damage_bonus)
+        end
     end)
 end
 
