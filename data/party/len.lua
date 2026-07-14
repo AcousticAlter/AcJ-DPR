@@ -144,7 +144,7 @@ end
 function character:getHeadIcons()
     local party = Game:getPartyMember("len")
     if party then
-        if party:getFlag("hoodless") then
+        if party:getFlag("hoodless") or (Game.battle and Game.battle.encounter.is_jackenstein) then
             return "party/len/icon/hoodless"
         end
     end
