@@ -429,6 +429,11 @@ local hub = {
             item2 = "white_ribbon"
         },
         {
+            result = "twinribbon2",
+            item1 = "blueribbon",
+            item2 = "redribbon"     -- I noticed how these two items are inconsistent with white and pink, that's why I did this :P
+        },
+        {
             result = "spikeband",
             item1 = "glowwrist",
             item2 = "ironshackle"
