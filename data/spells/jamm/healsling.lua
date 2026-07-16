@@ -1,4 +1,4 @@
-local spell, super = Class(Spell, "supersling")
+local spell, super = Class(Spell, "healsling")
 
 function spell:init()
     super.init(self)

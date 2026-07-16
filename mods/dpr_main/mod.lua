@@ -765,7 +765,7 @@ function Mod:makeSpellsMissAgainstJackenstein()
 
         return false
     end)
-    local spell = Registry.getSpell("supersling")
+    local spell = Registry.getSpell("healsling")
     HookSystem.hook(spell, "getDamage", function (orig, self, user, target)
         if Game.battle.encounter.is_jackenstein then
             return 0

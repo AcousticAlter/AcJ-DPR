@@ -37,6 +37,14 @@ function lib:checkSaveStatus()
         brenda:addSpell("powderkeg")
         print("[DP Lib] WARNING: Brenda does not have MultiFlare. Giving starting spells and removing GammaBeam. Save is likely from before her new spells were added.")
     end
+
+    -- trust me I'd GLADLY move this thing below to handleRetroSave() but I just have NO IDEA how to work with it
+    local jamm = Game:getPartyMember("jamm")
+    if not jamm:hasSpell("healsling") then
+        local spell = Registry.createSpell("healsling")
+        table.insert(jamm.spells, 1, spell) -- not regular assSpell() because this one's always first in the spell list
+        print("[DP Lib] WARNING: Jamm does not have HealSling. It was added to his spells. Save is likely from before his spell id was changed.")
+    end
 end
 
 function lib:onRegistered()
