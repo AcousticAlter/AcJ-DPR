@@ -57,9 +57,9 @@ function item:init()
         ralsei = "Um... Around my horns? Maybe?",
         noelle = "A mini ribbon festival, faha!",
         dess = "more like quadsucking ass",
-        jamm = "",
-        ["jamm+marcy"] = "",
-        calypso = "",
+        jamm = "...The hell do you think?",
+        ["jamm+marcy"] = "I can't fit it, Marcy...",
+        calypso = "Aye, it be a lot o' tying.",
         noel = "FOUR bracelets?",
         ceroba = "... I look childish now, don't I?",
     }
