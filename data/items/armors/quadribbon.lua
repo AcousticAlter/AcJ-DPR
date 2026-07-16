@@ -1,10 +1,10 @@
-local item, super = Class(Item, "twinribbon2")
+local item, super = Class(Item, "quadribbon")
 
 function item:init()
     super.init(self)
 
     -- Display name
-    self.name = "TwinRibbon2"
+    self.name = "QuadRibbon"
 
     -- Item type (item, key, weapon, armor)
     self.type = "armor"
@@ -16,10 +16,10 @@ function item:init()
     -- Shop description
     self.shop = ""
     -- Menu description
-    self.description = "Two ribbons branded after a certain\ncold drink."
+    self.description = "Four ribbons of multiple colors.\nFor true ribbon lovers."
 
     -- Default shop price (sell price is halved)
-    self.price = 400
+    self.price = 2000
     -- Whether the item can be sold
     self.can_sell = true
 
@@ -34,33 +34,36 @@ function item:init()
 
     -- Equip bonuses (for weapons and armor)
     self.bonuses = {
-        defense = 5,
-        magic = 2
+        defense = 8,
+        magic = 2,
+
+        graze_size = 0.25,
     }
     -- Bonus name and icon (displayed in equip menu)
-    self.bonus_name = "Heal+"
+    self.bonus_name = "GrArea&Heal+"
     self.bonus_icon = "ui/menu/icon/up"
 
     -- Equippable characters (default true for armors, false for weapons)
     self.can_equip = {
-		jamm = false,
-        dess = false
+        hero = false,
+        dess = false,
+		jamm = false
     }
 
     -- Character reactions
     self.reactions = {
-        hero = "Fits, surprisingly.",
-        susie = "Fine. NOT in the hair though.",
-        ralsei = "Around my horns goes well!",
-        noelle = "Hey, are we advertising something!?",
-        dess = "ew I hate pepsi",
-        jamm = "I won't be tricked by the slushie colors.",
-        ["jamm+marcy"] = "It won't work, sorry...",
-        calypso = "Me hair be tied twice...",
-        noel = "Two DIFFERENT bracelets?",
-        ceroba = "The colors go well together.",
+        hero = "It's... too much ribbons.",
+        susie = "On the wrists. Only.",
+        ralsei = "Um... Around my horns? Maybe?",
+        noelle = "A mini ribbon festival, faha!",
+        dess = "more like quadsucking ass",
+        jamm = "",
+        ["jamm+marcy"] = "",
+        calypso = "",
+        noel = "FOUR bracelets?",
+        ceroba = "... I look childish now, don't I?",
     }
-    self.susie_rejection = "... those got worse too, huh."
+    self.susie_rejection = "THEY'RE ALL TOGETHER NOW???"
 end
 
 function item:canEquip(character, slot_type, slot_index)

@@ -489,9 +489,9 @@ local hub = {
             item2 = "tentaser"
         },
         {
-            result = "triribbon",
+            result = "quadribbon",
             item1 = "twinribbon",
-            item2 = "princessrbn",
+            item2 = "twinribbon2",
         },
         {
             result = "royalpin",
