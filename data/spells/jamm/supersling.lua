@@ -69,9 +69,14 @@ function spell:onCast(user, target)
 	Game.battle.timer:after(0.1/2, function()
 		generateSlash(1)
 
-		target:heal(self:getDamage(user, target))
+		local heal = self:getDamage(user, target)
+		if heal > 0 then
+			target:heal(heal)
+		else
+			target:statusMessage("msg", "miss", {0, 1, 0})
+		end
 		if target:canService(self.id) then
-			target:addMercy(math.ceil(target.service_mercy * 1.3 * self:getMercyMult(user, target)))
+			target:addMercy(math.ceil(target.service_mercy * 1.3 * self:getMercyMult(user, target, heal)))
 		end
 		target:onService(self.id)
 	end)
@@ -93,9 +98,14 @@ function spell:onLightCast(user, target)
 	Game.battle.timer:after(0.1/2, function()
 		generateSlash(1)
 
-		target:heal(self:getDamage(user, target))
+		local heal = self:getDamage(user, target)
+		if heal > 0 then
+			target:heal(heal)
+		else
+			target:lightStatusMessage("text", "MISS", {0, 1, 0})
+		end
 		if target:canService(self.id) then
-			target:addMercy(math.ceil(target.service_mercy * 1.3 * self:getMercyMult(user, target)))
+			target:addMercy(math.ceil(target.service_mercy * 1.3 * self:getMercyMult(user, target, heal)))
 		end
 		target:onService(self.id)
 	end)
@@ -128,7 +138,11 @@ function spell:getDamage(user, target)
 	end
 end
 
-function spell:getMercyMult(user, target)
+function spell:getMercyMult(user, target, heal)
+	if heal <= 0 then
+		return 0
+	end
+
 	local mult = 1
 	if target.health == target.max_health then
 		mult = 0.5
