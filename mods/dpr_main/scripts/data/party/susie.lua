@@ -3,6 +3,8 @@ local character, super = HookSystem.hookScript("susie")
 function character:init()
     super.init(self)
 
+    self.title = "Betrayed Hero\nBetrayed and sealed\nby the blade."
+
     self.health = 110
 
     self.stats = {
@@ -11,6 +13,12 @@ function character:init()
         defense = 2,
         magic = 1
     }
+
+    self:removeSpell("better_heal") -- remove ch5 starting spells
+    self:removeSpell("scythemare")
+
+    self:addSpell("sick_heal") -- add dp spells
+    self:addSpell("pacibuster")
 
     self:setWeapon("old_ax")
     self:setArmor(1, nil)
