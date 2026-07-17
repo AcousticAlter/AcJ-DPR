@@ -372,7 +372,7 @@ return {
     file = "deltarune/church_wip",
     composer = "Toby Fox",
     released = "2025",
-    origin = "Deltarune",
+    origin = "DELTARUNE Chapter 4",
     album = "dr_ch3n4",
     bpm = 190
   },
