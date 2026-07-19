@@ -244,6 +244,9 @@ function DarkPartyMenu:update()
 					end
 				else
 					Game:addPartyMember(party)
+					if party == "noel" then
+						Game:setFlag("noel_SaveID", Noel:loadNoel()["SaveID"])
+					end
 					if self.slot_selected > 1 then
 						if Game.world.followers[self.slot_selected - 1] then
 							Game.world.followers[self.slot_selected - 1]:setActor(Game.party[self.slot_selected]:getActor())
