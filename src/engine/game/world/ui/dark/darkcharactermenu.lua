@@ -174,6 +174,7 @@ function DarkCharacterMenu:update()
 		else
 			self.ui_select:stop()
 			self.ui_select:play()
+			Input.clear("confirm")
 			Game.world:openMenu(DarkPartyMenu(self.selected))
 		end
 
